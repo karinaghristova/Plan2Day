@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Plan2Day.Core.Constants;
-using Plan2Day.Data;
+using Plan2Day.Infrastructure.Data;
 using Plan2Day.ModelBinders;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace Plan2Day.Data.Migrations
+namespace Plan2Day.Infrastructure.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
