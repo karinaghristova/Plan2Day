@@ -1,18 +1,12 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Plan2Day.Core.Constants;
 using Plan2Day.Infrastructure.Data;
-using Plan2Day.Infrastructure.Data.Repositories;
 using Plan2Day.ModelBinders;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
+builder.Services.AddApplicationDbContexts(builder.Configuration);
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -24,7 +18,7 @@ builder.Services.AddControllersWithViews()
         options.ModelBinderProviders.Insert(2, new DoubleModelBinderProvider());
     });
 
-builder.Services.AddScoped<IApplicatioDbRepository, ApplicationDbRepository>();
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
