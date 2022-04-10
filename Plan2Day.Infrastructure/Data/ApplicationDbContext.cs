@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Plan2Day.Infrastructure.Data.DbModels.Books;
 using Plan2Day.Infrastructure.Data.DbModels.Exercises;
 using Plan2Day.Infrastructure.Data.DbModels.Movies;
+using Plan2Day.Infrastructure.Data.Identity;
 
 namespace Plan2Day.Infrastructure.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

@@ -1,13 +1,18 @@
 using Microsoft.AspNetCore.Identity;
 using Plan2Day.Core.Constants;
 using Plan2Day.Infrastructure.Data;
+using Plan2Day.Infrastructure.Data.Identity;
 using Plan2Day.ModelBinders;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddApplicationDbContexts(builder.Configuration);
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+})
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews()
