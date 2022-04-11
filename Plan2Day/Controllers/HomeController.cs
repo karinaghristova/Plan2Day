@@ -16,6 +16,7 @@ namespace Plan2Day.Controllers
 
         public IActionResult Index()
         {
+            ViewData[MessageConstant.SuccessMessage] = "Welcome again";
             return View();
         }
 
