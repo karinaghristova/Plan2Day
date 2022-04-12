@@ -13,10 +13,6 @@ namespace Plan2Day.Infrastructure.Data.DbModels.Movies
         public Guid Id { get; set; } = new Guid();
 
         [Required]
-        [StringLength(100)]
-        public string ImdbOriginalId { get; set; }
-
-        [Required]
         [StringLength(250)]
         public string Title { get; set; }
 
