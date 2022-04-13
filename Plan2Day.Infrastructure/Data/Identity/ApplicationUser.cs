@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Plan2Day.Infrastructure.Data.DbModels.Activities;
+using Plan2Day.Infrastructure.Data.DbModels.Shopping;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,6 +17,9 @@ namespace Plan2Day.Infrastructure.Data.Identity
 
         [StringLength(200)]
         public string? LastName { get; set; }
+
+        public ICollection<Activity> Activities { get; set; } = new List<Activity>();
+        public ICollection<ShoppingList> ShoppingLists { get; set; } = new List<ShoppingList>();
 
     }
 }

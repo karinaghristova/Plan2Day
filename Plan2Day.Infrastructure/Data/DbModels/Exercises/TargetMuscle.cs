@@ -13,6 +13,7 @@ namespace Plan2Day.Infrastructure.Data.DbModels.Exercises
         public Guid Id { get; set; } = new Guid();
 
         [Required]
+        [StringLength(250)]
         public string Name { get; set; }
 
         public ICollection<Exercise> Exercises { get; set; } = new List<Exercise>();

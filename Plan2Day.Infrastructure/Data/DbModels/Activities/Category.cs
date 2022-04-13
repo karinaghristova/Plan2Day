@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plan2Day.Infrastructure.Data.DbModels.Exercises
+namespace Plan2Day.Infrastructure.Data.DbModels.Activities
 {
-    public class MechanicsType
+    public class Category
     {
         [Key]
         public Guid Id { get; set; } = new Guid();
@@ -16,7 +16,6 @@ namespace Plan2Day.Infrastructure.Data.DbModels.Exercises
         [StringLength(250)]
         public string Name { get; set; }
 
-        public ICollection<Exercise> Exercises { get; set; } = new List<Exercise>();
-
+        public ICollection<Activity> Activities { get; set; } = new List<Activity>();
     }
 }
