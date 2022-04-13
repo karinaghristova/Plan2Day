@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Plan2Day.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -16,7 +16,7 @@ namespace Plan2Day.Controllers
 
         public IActionResult Index()
         {
-            ViewData[MessageConstant.SuccessMessage] = "Welcome again";
+            //ViewData[MessageConstant.SuccessMessage] = "Welcome again";
             return View();
         }
 

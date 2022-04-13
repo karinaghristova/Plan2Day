@@ -1,14 +1,50 @@
-﻿<nav class="mt-2">
+﻿@using Plan2Day.Core.Constants
+<nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-        <li class="nav-iten">
-            <a href="/" class="nav-link">
-                <i class="fas fa-home"></i>
-                <p>
-                    Home
-                </p>
-            </a>
-        </li>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <li class="nav-item row">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
+                    <i class="fas fa-house-user"></i>
+                    <p>
+                        Login
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item row">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">
+                    <i class="fas fa-user"></i>
+                    <p>
+                        Register
+                    </p>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a href="/" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <p>
+                        Home
+                    </p>
+                </a>
+            </li>
+
+            @if (User.IsInRole(UserConstant.Roles.Administrator))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="Admin" asp-controller="User" asp-action="manageusers">
+                        <i class="fas fa-user"></i>
+                        <p>
+                            Manage Users
+                        </p>
+                    </a>
+                </li>
+            }
+        }
+
     </ul>
 </nav>
