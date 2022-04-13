@@ -23,13 +23,15 @@ namespace Plan2Day.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -37,6 +39,7 @@ namespace Plan2Day.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -128,6 +131,11 @@ namespace Plan2Day.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                    if (await _roleManager.RoleExistsAsync("OrdinaryUser"))
+                    {
+                        await _userManager.AddToRoleAsync(user, "OrdinaryUser");
+                    }
+
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
@@ -136,6 +144,13 @@ namespace Plan2Day.Areas.Identity.Pages.Account
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
+                    }
+
+                    var ordinaryUserRole = _roleManager.FindByNameAsync("OrdinaryUser").Result;
+
+                    if (ordinaryUserRole != null)
+                    {
+                        IdentityResult roleResult = await _userManager.AddToRoleAsync(user, ordinaryUserRole.Name);
                     }
 
                 }
