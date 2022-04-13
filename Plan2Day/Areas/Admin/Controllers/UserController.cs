@@ -101,11 +101,26 @@ namespace Plan2Day.Areas.Admin.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Delete(string id)
+        {
+            var result = await userService.DeleteUser(id);
+            if (result == true)
+            {
+                ViewData[MessageConstant.SuccessMessage] = "Successfully deleted user.";
+            }
+            else
+            {
+                ViewData[MessageConstant.ErrorMessage] = "User could not be deleted";
+            }
+
+            return RedirectToAction("ManageUsers");
+        }
+
         public async Task<IActionResult> CreateRole()
         {
             await roleManager.CreateAsync(new IdentityRole()
             {
-                Name = "OrdinaryUser"
+                Name = "Administrator"
             });
 
             return Ok();
