@@ -10,8 +10,9 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddScoped<IApplicatioDbRepository, ApplicationDbRepository>();
+            services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMovieService, MovieService>();
 
             return services;
         }

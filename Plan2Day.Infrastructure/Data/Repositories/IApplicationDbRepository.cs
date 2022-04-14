@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Plan2Day.Infrastructure.Data.Repositories
 {
-    public interface IApplicatioDbRepository : IRepository
+    public interface IApplicationDbRepository : IRepository
     {
     }
 }

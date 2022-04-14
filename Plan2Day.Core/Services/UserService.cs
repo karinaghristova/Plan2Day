@@ -8,11 +8,25 @@ namespace Plan2Day.Core.Services
 {
     public class UserService : IUserService
     {
-        private readonly IApplicatioDbRepository repo;
+        private readonly IApplicationDbRepository repo;
 
-        public UserService(IApplicatioDbRepository repo)
+        public UserService(IApplicationDbRepository repo)
         {
             this.repo = repo;
+        }
+
+        public async Task<bool> DeleteUser(string id)
+        {
+            bool deleted = false;
+            var user = await repo.GetByIdAsync<ApplicationUser>(id);
+            if (user != null)
+            {
+                await repo.DeleteAsync<ApplicationUser>(user.Id);
+                await repo.SaveChangesAsync();
+                deleted = true;
+            }
+
+            return deleted;
         }
 
         public async Task<UserEditViewModel> EditUser(string id)

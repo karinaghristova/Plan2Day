@@ -33,6 +33,15 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Movie" asp-action="allmovies">
+                    <i class="fas fa-user"></i>
+                    <p>
+                        Movies
+                    </p>
+                </a>
+            </li>
+
             @if (User.IsInRole(UserConstant.Roles.Administrator))
             {
                 <li class="nav-item">
