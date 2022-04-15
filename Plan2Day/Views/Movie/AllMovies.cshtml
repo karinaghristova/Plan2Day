@@ -1,8 +1,9 @@
 ﻿@using Plan2Day.Core.Models.Movies
 @using System.Collections.Generic
-@model IEnumerable<MovieListViewModel>
+@model AllMoviesViewModel
 @{
-
+    var previousDisabled = Model.Paging.CurrentPage == 1 ? "disabled" : "";
+    var nextDisabled = Model.Paging.CurrentPage == Model.Paging.TotalPages ? "disabled" : "";
 }
 
 <!-- Main content -->
@@ -12,26 +13,27 @@
     <div class="card card-solid">
         <div class="card-body pb-0">
             <div class="row">
-                @foreach (var movie in Model)
+                @foreach (var movie in Model.Movies.Take(20))
                 {
                     <partial name="MoviePartial" model="@movie"></partial>
                 }
             </div>
             <!-- /.card-body -->
-            @*<div class="card-footer">
+            <div class="card-footer">
                 <nav aria-label="Contacts Page Navigation">
                     <ul class="pagination justify-content-center m-0">
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item"><a class="page-link" href="#">6</a></li>
-                        <li class="page-item"><a class="page-link" href="#">7</a></li>
-                        <li class="page-item"><a class="page-link" href="#">8</a></li>
+                        <li class="page-item col-3 text-center @previousDisabled">
+                            <a class="page-link" href="@Url.Action("AllMovies", "Movie", new {page = @Model.Paging.PreviousPage})">Previous Page</a>
+                            </li>
+                        <li class="page-item col-2 text-center active">
+                            <a class="page-link" href="#">@Model.Paging.CurrentPage</a>
+                            </li>
+                        <li class="page-item col-3 text-center @nextDisabled">
+                            <a class="page-link"  href="@Url.Action("AllMovies", "Movie", new {page = @Model.Paging.NextPage})">Next Page</a>
+                        </li>
                     </ul>
                 </nav>
-            </div>*@
+            </div>
             <!-- /.card-footer -->
         </div>
         <!-- /.card -->

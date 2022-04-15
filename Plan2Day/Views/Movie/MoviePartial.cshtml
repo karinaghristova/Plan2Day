@@ -11,9 +11,9 @@
         <div class="card-body pt-0">
             <div class="row">
                 <div class="col-7">
-                    <h2 class="lead"><b>Year: Model.Year</b></h2>
+                    <h2 class="lead"><b>Year: @Model.Year</b></h2>
                     <ul class="ml-4 mb-0 fa-ul text-muted">
-                        <li class="small row"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>Runtime: @Model.Runtime minutes</li>
+                        <li class="small row"><span class="fa-li"><i class="fas fa-clock"></i></span>Runtime: @Model.Runtime minutes</li>
                         @{
                             var genres = new List<string>();
                             foreach (var genre in Model.Genres)
@@ -22,6 +22,11 @@
                             }
                         }
                         <li class="small row"><span class="fa-li"><i class="fas fa-film"></i></span>Genres: @string.Join(", ", genres)</li>
+                        <li class="small row"><span class="fa-li"><i class="fas fa-info-circle"></i></span>
+                            <a href="#" class="btn btn-sm btn-primary">
+                                 Details
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="col-5 text-center">
@@ -32,10 +37,10 @@
         <div class="card-footer">
             <div class="text-right">
                 <a href="#" class="btn btn-sm btn-primary">
-                    <i class="fas fa-user"></i> Add
+                    <i class="fas fa-user"></i> Add to watch
                 </a>
                 <a href="#" class="btn btn-sm btn-primary">
-                    <i class="fas fa-user"></i> Details
+                    <i class="fas fa-user"></i> Add as watched
                 </a>
             </div>
         </div>
