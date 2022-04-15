@@ -1,0 +1,43 @@
+﻿@using Plan2Day.Core.Models.Movies
+@model MovieListViewModel
+@{
+}
+
+<div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+    <div class="card bg-light d-flex flex-fill">
+        <div class="card-header text-muted border-bottom-0">
+            <h3>@Model.Title</h3>
+        </div>
+        <div class="card-body pt-0">
+            <div class="row">
+                <div class="col-7">
+                    <h2 class="lead"><b>Year: @Model.Year</b></h2>
+                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                        <li class="small row"><span class="fa-li"><i class="fas fa-clock"></i></span>Runtime: @Model.Runtime minutes</li>
+                        @{
+                            var genres = new List<string>();
+                            foreach (var genre in Model.Genres)
+                            {
+                                genres.Add(genre.Name);
+                            }
+                        }
+                        <li class="small row"><span class="fa-li"><i class="fas fa-film"></i></span>Genres: @string.Join(", ", genres)</li>
+                    </ul>
+                </div>
+                <div class="col-5 text-center">
+                    <img src="@Model.ImageUrl" alt="user-avatar" class="img-fluid">
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="text-right">
+                <a href="@Url.Action("EditMovie", "Movie", new {movieId = @Model.Id})" class="btn btn-sm btn-primary">
+                    <i class="fas fa-user"></i> Edit movie
+                </a>
+                 <a href="@Url.Action("DeleteMovie", "Movie", new {movieId = @Model.Id})" class="btn btn-sm btn-primary">
+                    <i class="fas fa-user"></i> Delete movie
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
