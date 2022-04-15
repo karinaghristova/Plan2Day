@@ -36,8 +36,11 @@
         </div>
         <div class="card-footer">
             <div class="text-right">
-                <a href="@Url.Action("AddMovieToWantToWatch", "Movie", new {movieId = @Model.Id})" class="btn btn-sm btn-primary">
+                @*<a href="@Url.Action("AddMovieToWantToWatch", "Movie", new {movieId = @Model.Id})" class="btn btn-sm btn-primary">
                     <i class="fas fa-user"></i> Add to watch list
+                </a>*@
+                <a href="#" class="btn btn-sm btn-primary">
+                    <i class="fas fa-user"></i> Remove
                 </a>
                 <a href="@Url.Action("AddMovieToWatched", "Movie", new {movieId = @Model.Id})" class="btn btn-sm btn-primary">
                     <i class="fas fa-user"></i> Watched
