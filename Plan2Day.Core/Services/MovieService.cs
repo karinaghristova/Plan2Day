@@ -20,7 +20,12 @@ namespace Plan2Day.Core.Services
         public async Task<bool> AddMovieToWatchList(string userId, string movieId)
         {
             bool added = false;
-            var movie = await repo.GetByIdAsync<Movie>(new Guid(movieId));
+            var movie = await GetMovieByIdAsync(movieId);
+
+            if (movie == null)
+            {
+                throw new Exception("Movie could not be found");
+            }
             var user = await repo.GetByIdAsync<ApplicationUser>(userId);
 
             if (movie != null && user != null)
@@ -57,8 +62,14 @@ namespace Plan2Day.Core.Services
 
         public async Task<bool> MarkMovieAsWatched(string userId, string movieId)
         {
-            bool added = false;
-            var movie = await repo.GetByIdAsync<Movie>(new Guid(movieId));
+            bool marked = false;
+            var movie = await GetMovieByIdAsync(movieId);
+
+            if (movie == null)
+            {
+                throw new Exception("Movie could not be found");
+            }
+
             var user = await repo.GetByIdAsync<ApplicationUser>(userId);
 
             if (movie != null && user != null)
@@ -87,16 +98,16 @@ namespace Plan2Day.Core.Services
                     await repo.AddAsync<UserMovie>(userMovie);
                 }
                 await repo.SaveChangesAsync();
-                added = true;
+                marked = true;
             }
 
-            return added;
+            return marked;
         }
 
         public async Task<bool> DeleteMovie(string id)
         {
             bool deleted = false;
-            var movie = await repo.GetByIdAsync<Movie>(id);
+            var movie = await GetMovieByIdAsync(id);
             if (movie != null)
             {
                 await repo.DeleteAsync<Movie>(movie.Id);
@@ -109,7 +120,13 @@ namespace Plan2Day.Core.Services
 
         public async Task<MovieEditViewModel> EditMovie(string id)
         {
-            var movie = await repo.GetByIdAsync<Movie>(id);
+            var movie = await GetMovieByIdAsync(id);
+
+            if (movie == null)
+            {
+                throw new Exception("Movie could not be found");
+            }
+
             return new MovieEditViewModel()
             {
                 Id = movie.Id,
@@ -123,7 +140,12 @@ namespace Plan2Day.Core.Services
 
         public async Task<IEnumerable<MovieGenreListViewModel>> GetAllGenresForMovie(string id)
         {
-            var movie = await repo.GetByIdAsync<Movie>(id);
+            var movie = await GetMovieByIdAsync(id);
+            if (movie == null)
+            {
+                throw new Exception("Movie could not be found");
+            }
+
             return await repo.All<MovieGenre>()
                 .Include(mg => mg.Movies)
                 .Where(mg => mg.Movies.Contains(movie))
@@ -185,9 +207,15 @@ namespace Plan2Day.Core.Services
                 }).ToListAsync();
         }
 
-        public async Task<Movie> GetMovieById(string id)
+        public async Task<Movie> GetMovieByIdAsync(string id)
         {
-            return await repo.GetByIdAsync<Movie>(id);
+            var movie = await repo.GetByIdAsync<Movie>(new Guid(id));
+
+            if (movie == null)
+            {
+                throw new Exception("Movie could not be found");
+            }
+            return movie;
         }
 
         public async Task<bool> UpdateMovie(MovieEditViewModel model)
@@ -195,19 +223,75 @@ namespace Plan2Day.Core.Services
             bool result = false;
             var movie = await repo.GetByIdAsync<Movie>(model.Id);
 
-            if (movie != null)
+            if (movie == null)
             {
-                movie.Title = model.Title;
-                movie.ImageUrl = model.ImageUrl;
-                movie.Year = model.Year;
-                movie.Runtime = model.Runtime;
-                movie.Plot = model.Plot;
-
-                await repo.SaveChangesAsync();
-                result = true;
+                throw new Exception("Movie could not be found");
             }
 
+            movie.Title = model.Title;
+            movie.ImageUrl = model.ImageUrl;
+            movie.Year = model.Year;
+            movie.Runtime = model.Runtime;
+            movie.Plot = model.Plot;
+
+            await repo.SaveChangesAsync();
+            result = true;
+
             return result;
+        }
+
+        public async Task<MovieListViewModel> GetMovieDetails(string id)
+        {
+            var movies = await repo.All<Movie>()
+                .Include(m => m.Genres)
+                .Select(m => new MovieListViewModel()
+                {
+                    Id = m.Id,
+                    Title = m.Title,
+                    ImageUrl = m.ImageUrl,
+                    Year = m.Year,
+                    Runtime = m.Runtime,
+                    Plot = m.Plot,
+                    Genres = m.Genres
+                }).ToListAsync();
+
+            var movie = movies.FirstOrDefault(m => m.Id == new Guid(id));
+
+            if (movie == null)
+            {
+                throw new Exception("Movie could not be found");
+            }
+
+            return movie;
+        }
+
+        public async Task<bool> RemoveMovieFromList(string userId, string movieId)
+        {
+            bool removed = false;
+
+            var movie = await GetMovieByIdAsync(movieId);
+            var user = await repo.GetByIdAsync<ApplicationUser>(userId);
+
+
+            if (movie == null || user == null)
+            {
+                throw new Exception("Movie could not be found");
+            }
+
+            var userMovies = repo.All<UserMovie>()
+                .Where(um => um.MovieId == movie.Id && um.ApplicationUserId == user.Id);
+            var userMovie = await userMovies.FirstOrDefaultAsync();
+
+            if (userMovie == null)
+            {
+                throw new Exception("Movie could not be found");
+            }
+
+            repo.Delete<UserMovie>(userMovie);
+            await repo.SaveChangesAsync();
+            removed = true;
+
+            return removed;
         }
     }
 }

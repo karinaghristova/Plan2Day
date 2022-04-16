@@ -65,15 +65,24 @@ namespace Plan2Day.Controllers
         public async Task<IActionResult> AddMovieToWantToWatch(string movieId)
         {
             var userId = userManager.GetUserId(HttpContext.User);
-            var result = await movieService.AddMovieToWatchList(userId, movieId);
 
-            if (result == true)
+            try
             {
-                ViewData[MessageConstant.SuccessMessage] = "Successfully deleted user.";
+                var result = await movieService.AddMovieToWatchList(userId, movieId);
+
+                if (result == true)
+                {
+                    ViewData[MessageConstant.SuccessMessage] = "Successfully added movie to watch list.";
+                }
+                else
+                {
+                    ViewData[MessageConstant.ErrorMessage] = "Movie could not be added to watch list.";
+                }
             }
-            else
+            catch (Exception)
             {
-                ViewData[MessageConstant.ErrorMessage] = "User could not be deleted";
+                ViewData[MessageConstant.ErrorMessage] = "Movie could not be added to watch list.";
+                return RedirectToAction("Index", "Home");
             }
 
             return RedirectToAction("WantToWatchMovies");
@@ -101,18 +110,71 @@ namespace Plan2Day.Controllers
         public async Task<IActionResult> AddMovieToWatched(string movieId)
         {
             var userId = userManager.GetUserId(HttpContext.User);
-            var result = await movieService.MarkMovieAsWatched(userId, movieId);
-
-            if (result == true)
+            try
             {
-                ViewData[MessageConstant.SuccessMessage] = "Successfully deleted user.";
+                var result = await movieService.MarkMovieAsWatched(userId, movieId);
+
+                if (result == true)
+                {
+                    ViewData[MessageConstant.SuccessMessage] = "Successfully added movie to watched list.";
+                }
+                else
+                {
+                    ViewData[MessageConstant.ErrorMessage] = "Movie could not be added to watched list";
+                }
             }
-            else
+            catch (Exception)
             {
-                ViewData[MessageConstant.ErrorMessage] = "User could not be deleted";
+                ViewData[MessageConstant.ErrorMessage] = "Movie could not be added to watched list.";
+                return RedirectToAction("Index", "Home");
+            }
+            
+
+            return RedirectToAction("WatchedMovies");
+        }
+
+        public async Task<IActionResult> RemoveMovieFromList(string movieId)
+        {
+            var userId = userManager.GetUserId(HttpContext.User);
+
+            try
+            {
+                var result = await movieService.RemoveMovieFromList(userId, movieId);
+
+                if (result == true)
+                {
+                    ViewData[MessageConstant.SuccessMessage] = "Successfully removed movie";
+                }
+                else
+                {
+                    ViewData[MessageConstant.ErrorMessage] = "Movie could not be removed.";
+                }
+            }
+            catch (Exception)
+            {
+                ViewData[MessageConstant.ErrorMessage] = "Movie could not be removed.";
+                return RedirectToAction("Index", "Home");
             }
 
-            return RedirectToAction("WantToWatchMovies");
+            return RedirectToAction("AllMovies");
+
+        }
+
+        public async Task<IActionResult> MovieDetails(string movieId)
+        {
+            try
+            {
+                var resultModel = await movieService.GetMovieDetails(movieId);
+                ViewData[MessageConstant.SuccessMessage] = "Movie details successfully loaded.";
+                return View(resultModel);
+
+            }
+            catch (Exception)
+            {
+                ViewData[MessageConstant.ErrorMessage] = "Movie details could not be loaded.";
+                return RedirectToAction("AllMovies");
+            }
+
         }
     }
 }

@@ -23,7 +23,7 @@
                         }
                         <li class="small row"><span class="fa-li"><i class="fas fa-film"></i></span>Genres: @string.Join(", ", genres)</li>
                         <li class="small row"><span class="fa-li"><i class="fas fa-info-circle"></i></span>
-                            <a href="#" class="btn btn-sm btn-primary">
+                            <a href="@Url.Action("MovieDetails", "Movie", new {movieId = @Model.Id})" class="btn btn-sm btn-primary">
                                  Details
                             </a>
                         </li>
@@ -39,7 +39,7 @@
 @*                <a href="@Url.Action("AddMovieToWantToWatch", "Movie", new {movieId = @Model.Id})" class="btn btn-sm btn-primary">
                     <i class="fas fa-user"></i> Add to watch list
                 </a>*@
-                <a href="#" class="btn btn-sm btn-primary">
+                <a href="@Url.Action("RemoveMovieFromList", "Movie", new {movieId = @Model.Id})" class="btn btn-sm btn-primary">
                     <i class="fas fa-user"></i> Remove
                 </a>
             </div>

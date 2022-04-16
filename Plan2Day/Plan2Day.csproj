@@ -24,8 +24,4 @@
     <ProjectReference Include="..\Plan2Day.Core\Plan2Day.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Views\Movie\" />
-  </ItemGroup>
-
 </Project>
