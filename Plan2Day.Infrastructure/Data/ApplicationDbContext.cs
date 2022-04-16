@@ -19,6 +19,7 @@ namespace Plan2Day.Infrastructure.Data
         //Books
         public DbSet<Book> Books { get; set; }
         public DbSet<BookGenre> BookGenres { get; set; }
+        public DbSet<UserBook> UserBooks { get; set; }
 
         //Movies
         public DbSet<Movie> Movies { get; set; }
@@ -46,6 +47,11 @@ namespace Plan2Day.Infrastructure.Data
         {
             base.OnModelCreating(builder);
             builder.Entity<UserMovie>().HasKey(k => new { k.ApplicationUserId, k.MovieId });
+            builder.Entity<UserBook>().HasKey(k => new
+            {
+                k.ApplicationUserId,
+                k.BookId
+            });
         }
 
     }
