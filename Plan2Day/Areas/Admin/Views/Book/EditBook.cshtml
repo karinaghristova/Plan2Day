@@ -1,0 +1,78 @@
+﻿@using Plan2Day.Core.Models
+@using Plan2Day.Core.Models.Books
+@model BookEditViewModel
+@{
+    ViewData["Title"] = "Edit movie";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit movie</h3>
+                    </div>
+                    <form id="editMovie" method="post" novalidate="novalidate">
+                        <div class="row">
+                           <div class="col-7">
+                                <input type="hidden" name="Id" value="@Model.Id">
+                            <div class="card-body">
+                                <div class="form-floating">
+                                    <label class="form-label" for="Title">Title</label>
+                                    <input class="form-control" placeholder="Title" aria-required="true" type="text" data-val="true" data-val-length="The field Title must be a string with a maximum length of 250." data-val-length-max="250" data-val-required="The Title field is required." id="Title" maxlength="250" name="Title" value="@Model.Title">
+                                    <span class="text-danger field-validation-valid" data-valmsg-for="Title" data-valmsg-replace="true"></span>
+                                </div>
+                                <div class="form-floating">
+                                    <label class="form-label" for="ImageUrl">ImageUrl</label>
+                                    <input class="form-control" placeholder="ImageUrl" aria-required="true" type="text" data-val="true" data-val-required="The Title field is required." id="ImageUrl" name="ImageUrl" value="@Model.ImageUrl">
+                                    <span class="text-danger field-validation-valid" data-valmsg-for="ImageUrl" data-valmsg-replace="true"></span>
+                                </div>
+                                <div class="form-floating">
+                                    <label class="form-label" for="Author">Author</label>
+                                    <input class="form-control" placeholder="Author" aria-required="true" type="text" data-val="true" data-val-length="The field Author must be a string with a maximum length of 250." data-val-length-max="250" data-val-required="The Author field is required." id="Author" maxlength="250" name="Author" value="@Model.Author">
+                                    <span class="text-danger field-validation-valid" data-valmsg-for="Author" data-valmsg-replace="true"></span>
+                                </div>
+                                <div class="form-floating">
+                                    <label class="form-label" for="Isbn13">Isbn13</label>
+                                    <input class="form-control" placeholder="Isbn13" aria-required="true" type="text" data-val="true" data-val-length="The field Isbn13 must be a string with a maximum length of 13." data-val-length-max="13" data-val-required="The Isbn13 field is required." id="Isbn13" maxlength="13" name="Isbn13" value="@Model.Isbn13">
+                                    <span class="text-danger field-validation-valid" data-valmsg-for="Isbn13" data-valmsg-replace="true"></span>
+                                </div>
+                                <div class="form-floating">
+                                    <label class="form-label" for="Pages">Pages</label>
+                                    <input class="form-control" placeholder="Pages" aria-required="true" type="number" data-val="true" id="Pages" name="Pages" value="@Model.Pages">
+                                    <span class="text-danger field-validation-valid" data-valmsg-for="Pages" data-valmsg-replace="true"></span>
+                                </div>
+                                <div class="form-floating">
+                                    <label class="form-label" for="Year">Year</label>
+                                    <input class="form-control" placeholder="Year" aria-required="true" type="text" data-val="true" id="Year" name="Year" value="@Model.Year">
+                                    <span class="text-danger field-validation-valid" data-valmsg-for="Year" data-valmsg-replace="true"></span>
+                                </div>
+                                <div class="form-floating">
+                                    <label class="form-label" for="Description">Description</label>
+                                    <input class="form-control" placeholder="Description" aria-required="true" type="text" data-val="true" data-val-length="The field Description must be a string with a maximum length of 10000." data-val-length-max="10000" id="Description" maxlength="10000" name="Description" value="@Model.Description">
+                                    <span class="text-danger field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                           </div>
+                            <div class="col-4 text-center">
+                                <img src="@Model.ImageUrl" alt="user-avatar" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Edit movie</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+@section Scripts{
+<partial name="_ValidationScriptsPartial" />
+}

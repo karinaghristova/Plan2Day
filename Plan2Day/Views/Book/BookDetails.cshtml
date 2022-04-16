@@ -1,0 +1,78 @@
+﻿@using Plan2Day.Core.Models.Books
+@using System.Collections.Generic
+@model BookListViewModel
+@{
+}
+
+<!-- Main content -->
+<section class="content">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">@Model.Title</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Book" asp-action="AllBooks">All books</a></li>
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Book" asp-action="wantToReadBooks">Want to read</a></li>
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Book" asp-action="currentlyReadingBooks">Currently reading</a></li>
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Book" asp-action="readBooks">Read</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Default box -->
+    <div class="card card-solid">
+        <div class="card-body pb-0">
+            <div class="row">
+
+                <div class="col-12 d-flex align-items-stretch flex-column">
+                    <div class="card bg-light d-flex flex-fill">
+                        <div class="card-header text-muted border-bottom-0">
+                            <h3>@Model.Title</h3>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h2 class="lead"><b>Author: @Model.Author</b></h2>
+                                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                                        <li class="big row"><span class="fa-li"><i class="fas fa-clock"></i></span>Year: @Model.Year</li>
+                                        <li class="big row"><span class="fa-li"><i class="fas fa-barcode"></i></i></span>ISBN: @Model.Isbn13</li>
+                                        <li class="big row"><span class="fa-li"><i class="fas fa-file"></i></span>Pages: @Model.Pages</li>
+                                        <li class="big row">
+                                            <span class="fa-li"><i class="fas fa-info-circle"></i></span>
+                                            Description: @Model.Description
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-5 text-center">
+                                    <img src="@Model.ImageUrl" alt="user-avatar" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="text-right">
+                                <a href="@Url.Action("AddBookToWantToRead", "Book", new {bookId = @Model.Id})" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-user"></i> Want to read
+                                </a>
+                                <a href="@Url.Action("AddBookRead", "Book", new {bookId = @Model.Id})" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-user"></i> Read
+                                </a>
+                                <a href="@Url.Action("AddBookToCurrentlyReading", "Book", new {bookId = @Model.Id})" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-user"></i> Reading
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+            <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+
+</section>
+<!-- /.content -->

@@ -1,10 +1,10 @@
 ﻿@using Plan2Day.Core.Models.Movies
 @using System.Collections.Generic
-@model AllMoviesViewModel
+@model AllBooksViewModel
 @{
     var previousDisabled = Model.Paging.CurrentPage == 1 ? "disabled" : "";
     var nextDisabled = Model.Paging.CurrentPage == Model.Paging.TotalPages ? "disabled" : "";
-    var moviesPresent = Model.Movies.Count() != 0 ? true : false;
+    var booksPresent = Model.Books.Count() != 0 ? true : false;
 }
 
 <!-- Main content -->
@@ -13,14 +13,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Movies</h1>
+                    <h1 class="m-0">Books</h1>
                 </div>
-@*                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Movie" asp-action="wanttowatchmovies">Watch list</a></li>
-                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Movie" asp-action="watchedmovies">Watched movies</a></li>
-                    </ol>
-                </div>*@
             </div>
         </div>
     </div>
@@ -28,25 +22,25 @@
     <div class="card card-solid">
         <div class="card-body pb-0">
             <div class="row">
-                @foreach (var movie in Model.Movies.Take(20))
+                @foreach (var book in Model.Books.Take(20))
                 {
-                    <partial name="MoviePartial" model="@movie"></partial>
+                    <partial name="BookPartial" model="@book"></partial>
                 }
             </div>
             <!-- /.card-body -->
-            @if (moviesPresent)
+            @if (booksPresent)
             {
                 <div class="card-footer">
                     <nav aria-label="Contacts Page Navigation">
                         <ul class="pagination justify-content-center m-0">
                             <li class="page-item col-3 text-center @previousDisabled">
-                                <a class="page-link" href="@Url.Action("ManageMovies", "Movie", new {page = @Model.Paging.PreviousPage})">Previous Page</a>
+                                <a class="page-link" href="@Url.Action("ManageBooks", "Book", new {page = @Model.Paging.PreviousPage})">Previous Page</a>
                             </li>
                             <li class="page-item col-2 text-center active">
                                 <a class="page-link" href="#">@Model.Paging.CurrentPage</a>
                             </li>
                             <li class="page-item col-3 text-center @nextDisabled">
-                                <a class="page-link" href="@Url.Action("ManageMovies", "Movie", new {page = @Model.Paging.NextPage})">Next Page</a>
+                                <a class="page-link" href="@Url.Action("ManageBooks", "Book", new {page = @Model.Paging.NextPage})">Next Page</a>
                             </li>
                         </ul>
                     </nav>

@@ -11,9 +11,7 @@ namespace Plan2Day.Controllers
     public class MovieController : BaseController
     {
         private readonly IMovieService movieService;
-        //private readonly ILogger<MovieController> logger;
         private readonly UserManager<ApplicationUser> userManager;
-
 
         public MovieController(IMovieService movieService, UserManager<ApplicationUser> userManager)
         {
@@ -29,7 +27,7 @@ namespace Plan2Day.Controllers
         public async Task<IActionResult> AllMovies(int page = 1)
         {
             var movies = await movieService.GetAllMovies();
-            int moviesPerPage = PageConstants.PageSize50;
+            int moviesPerPage = PageConstants.PageSize20;
             int moviesToSkip = page == 1 ? 0 : page * moviesPerPage;
 
             return View(new AllMoviesViewModel
@@ -48,7 +46,7 @@ namespace Plan2Day.Controllers
             var userId = userManager.GetUserId(HttpContext.User);
 
             var movies = await movieService.GetAllWantToWatchMovies(userId);
-            int moviesPerPage = PageConstants.PageSize50;
+            int moviesPerPage = PageConstants.PageSize20;
             int moviesToSkip = page == 1 ? 0 : page * moviesPerPage;
 
             return View(new AllMoviesViewModel
@@ -93,7 +91,7 @@ namespace Plan2Day.Controllers
             var userId = userManager.GetUserId(HttpContext.User);
 
             var movies = await movieService.GetAllWatchedMovies(userId);
-            int moviesPerPage = PageConstants.PageSize50;
+            int moviesPerPage = PageConstants.PageSize20;
             int moviesToSkip = page == 1 ? 0 : page * moviesPerPage;
 
             return View(new AllMoviesViewModel

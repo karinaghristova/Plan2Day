@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Plan2Day.Core.Constants;
 using Plan2Day.Core.Contracts;
-using Plan2Day.Core.Models.Movies;
+using Plan2Day.Core.Models.Books;
 using Plan2Day.Models;
 
 namespace Plan2Day.Areas.Admin.Controllers
 {
-    public class MovieController : BaseController
+    public class BookController : BaseController
     {
-        private IMovieService movieService;
+        private readonly IBookService bookService;
 
-        public MovieController(IMovieService movieService)
+        public BookController(IBookService bookService)
         {
-            this.movieService = movieService;
+            this.bookService = bookService;
         }
 
         public IActionResult Index()
@@ -20,15 +20,15 @@ namespace Plan2Day.Areas.Admin.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ManageMovies(int page = 1)
+        public async Task<IActionResult> ManageBooks(int page = 1)
         {
-            var movies = await movieService.GetAllMovies();
+            var movies = await bookService.GetAllBooks();
             int moviesPerPage = PageConstants.PageSize20;
             int moviesToSkip = page == 1 ? 0 : page * moviesPerPage;
 
-            return View(new AllMoviesViewModel
+            return View(new AllBooksViewModel
             {
-                Movies = movies.Skip(moviesToSkip).Take(moviesPerPage),
+                Books = movies.Skip(moviesToSkip).Take(moviesPerPage),
                 Paging = new PagingViewModel
                 {
                     CurrentPage = page,
@@ -37,20 +37,20 @@ namespace Plan2Day.Areas.Admin.Controllers
             });
         }
 
-        public async Task<IActionResult> DeleteMovie(string movieId)
+        public async Task<IActionResult> DeleteBook(string bookId)
         {
             try
             {
-                var result = await movieService.DeleteMovie(movieId);
+                var result = await bookService.DeleteBook(bookId);
                 if (result == true)
                 {
-                    ViewData[MessageConstant.SuccessMessage] = "Successfully deleted movie.";
+                    ViewData[MessageConstant.SuccessMessage] = "Successfully deleted book.";
                 }
                 else
                 {
-                    ViewData[MessageConstant.ErrorMessage] = "Movie could not be deleted";
+                    ViewData[MessageConstant.ErrorMessage] = "Book could not be deleted";
                 }
-                return RedirectToAction("ManageMovies");
+                return RedirectToAction("ManageBooks");
 
             }
             catch (Exception)
@@ -59,36 +59,36 @@ namespace Plan2Day.Areas.Admin.Controllers
             }
         }
 
-        public async Task<IActionResult> EditMovie(string movieId)
+        public async Task<IActionResult> EditBook(string bookId)
         {
             try
             {
-                var model = await movieService.EditMovie(movieId);
+                var model = await bookService.EditBook(bookId);
 
                 return View(model);
             }
             catch (Exception)
             {
-                ViewData[MessageConstant.ErrorMessage] = "Movie could not be edited.";
+                ViewData[MessageConstant.ErrorMessage] = "Book could not be edited.";
                 return RedirectToAction("Index", "Home");
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditMovie(MovieEditViewModel model)
+        public async Task<IActionResult> EditBook(BookEditViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            if (await movieService.UpdateMovie(model))
+            if (await bookService.UpdateBook(model))
             {
-                ViewData[MessageConstant.SuccessMessage] = "Successfully edited movie.";
+                ViewData[MessageConstant.SuccessMessage] = "Successfully edited book.";
             }
             else
             {
-                ViewData[MessageConstant.ErrorMessage] = "Movie could not be edited.";
+                ViewData[MessageConstant.ErrorMessage] = "Book could not be edited.";
             }
 
             return View(model);
