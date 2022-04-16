@@ -10,7 +10,7 @@ namespace Plan2Day.Core.Models.Movies
 {
     public class MovieEditViewModel
     {
-        public Guid Id { get; set; } = new Guid();
+        public string Id { get; set; }
         [Required]
         [StringLength(250)]
         public string Title { get; set; }

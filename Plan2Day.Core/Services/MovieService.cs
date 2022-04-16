@@ -129,7 +129,7 @@ namespace Plan2Day.Core.Services
 
             return new MovieEditViewModel()
             {
-                Id = movie.Id,
+                Id = movie.Id.ToString(),
                 Title = movie.Title,
                 ImageUrl = movie.ImageUrl,
                 Year = movie.Year,
@@ -151,7 +151,7 @@ namespace Plan2Day.Core.Services
                 .Where(mg => mg.Movies.Contains(movie))
                 .Select(mg => new MovieGenreListViewModel
                 {
-                    Id = mg.Id,
+                    Id = mg.Id.ToString(),
                     Name = mg.Name
                 })
                 .ToListAsync();
@@ -163,7 +163,7 @@ namespace Plan2Day.Core.Services
                 .Include(m => m.Genres)
                 .Select(m => new MovieListViewModel()
                 {
-                    Id = m.Id,
+                    Id = m.Id.ToString(),
                     Title = m.Title,
                     ImageUrl = m.ImageUrl,
                     Year = m.Year,
@@ -180,7 +180,7 @@ namespace Plan2Day.Core.Services
                 .Include(um => um.Movie)
                 .Select(m => new MovieListViewModel()
                 {
-                    Id = m.MovieId,
+                    Id = m.MovieId.ToString(),
                     Title = m.Movie.Title,
                     ImageUrl = m.Movie.ImageUrl,
                     Year = m.Movie.Year,
@@ -197,7 +197,7 @@ namespace Plan2Day.Core.Services
                 .Include(um => um.Movie)
                 .Select(m => new MovieListViewModel()
                 {
-                    Id = m.MovieId,
+                    Id = m.MovieId.ToString(),
                     Title = m.Movie.Title,
                     ImageUrl = m.Movie.ImageUrl,
                     Year = m.Movie.Year,
@@ -246,7 +246,7 @@ namespace Plan2Day.Core.Services
                 .Include(m => m.Genres)
                 .Select(m => new MovieListViewModel()
                 {
-                    Id = m.Id,
+                    Id = m.Id.ToString(),
                     Title = m.Title,
                     ImageUrl = m.ImageUrl,
                     Year = m.Year,
@@ -255,7 +255,7 @@ namespace Plan2Day.Core.Services
                     Genres = m.Genres
                 }).ToListAsync();
 
-            var movie = movies.FirstOrDefault(m => m.Id == new Guid(id));
+            var movie = movies.FirstOrDefault(m => m.Id == id);
 
             if (movie == null)
             {

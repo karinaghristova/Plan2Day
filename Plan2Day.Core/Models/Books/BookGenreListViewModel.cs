@@ -9,7 +9,7 @@ namespace Plan2Day.Core.Models.Books
 {
     public class BookGenreListViewModel
     {
-        public Guid Id { get; set; } = new Guid();
+        public string Id { get; set; }
 
         [Required]
         [StringLength(250)]

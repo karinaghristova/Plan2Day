@@ -180,7 +180,7 @@ namespace Plan2Day.Core.Services
 
             return new BookEditViewModel()
             {
-                Id = book.Id,
+                Id = book.Id.ToString(),
                 Title = book.Title,
                 ImageUrl = book.ImageUrl,
                 Author = book.Author,
@@ -197,7 +197,7 @@ namespace Plan2Day.Core.Services
                  .Include(b => b.Genres)
                  .Select(b => new BookListViewModel()
                  {
-                     Id = b.Id,
+                     Id = b.Id.ToString(),
                      Title = b.Title,
                      ImageUrl = b.ImageUrl,
                      Author = b.Author,
@@ -222,7 +222,7 @@ namespace Plan2Day.Core.Services
                 .Where(bg => bg.Books.Contains(book))
                 .Select(bg => new BookGenreListViewModel()
                 {
-                    Id = bg.Id,
+                    Id = bg.Id.ToString(),
                     Name = bg.Name
                 })
                 .ToListAsync();
@@ -272,7 +272,7 @@ namespace Plan2Day.Core.Services
                 .Include(ub => ub.Book)
                 .Select(b => new BookListViewModel()
                 {
-                    Id = b.Book.Id,
+                    Id = b.Book.Id.ToString(),
                     Title = b.Book.Title,
                     ImageUrl = b.Book.ImageUrl,
                     Author = b.Book.Author,
@@ -290,7 +290,7 @@ namespace Plan2Day.Core.Services
                 .Include(ub => ub.Book)
                 .Select(b => new BookListViewModel()
                 {
-                    Id = b.Book.Id,
+                    Id = b.Book.Id.ToString(),
                     Title = b.Book.Title,
                     ImageUrl = b.Book.ImageUrl,
                     Author = b.Book.Author,
@@ -308,7 +308,7 @@ namespace Plan2Day.Core.Services
                 .Include(ub => ub.Book)
                 .Select(b => new BookListViewModel()
                 {
-                    Id = b.Book.Id,
+                    Id = b.Book.Id.ToString(),
                     Title = b.Book.Title,
                     ImageUrl = b.Book.ImageUrl,
                     Author = b.Book.Author,
@@ -325,7 +325,7 @@ namespace Plan2Day.Core.Services
                 .Include(b => b.Genres)
                 .Select(b => new BookListViewModel()
                 {
-                    Id = b.Id,
+                    Id = b.Id.ToString(),
                     Title = b.Title,
                     ImageUrl = b.ImageUrl,
                     Author = b.Author,
@@ -335,7 +335,7 @@ namespace Plan2Day.Core.Services
                     Description = b.Description
                 }).ToListAsync();
 
-            var book = books.FirstOrDefault(b => b.Id == new Guid(id));
+            var book = books.FirstOrDefault(b => b.Id == id);
 
             if (book == null)
             {
