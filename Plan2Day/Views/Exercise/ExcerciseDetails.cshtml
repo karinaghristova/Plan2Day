@@ -1,0 +1,56 @@
+﻿@using System.Collections.Generic
+@using Plan2Day.Core.Models.Exercises
+@model ExerciseListViewModel
+@{
+}
+
+<!-- Main content -->
+<section class="content">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">@Model.Name</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Exercise" asp-action="AllExercises">All excercises</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Default box -->
+    <div class="card card-solid">
+        <div class="card-body pb-0">
+            <div class="row">
+
+                <div class="col-12 d-flex align-items-stretch flex-column">
+                    <div class="card bg-light d-flex flex-fill">
+
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col-7">
+                                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                                        <li class="big row"><span class="fa-li"><i class="fas fa-clock"></i></span>Target muscle: @Model.TargetMuscle</li>
+                                         <li class="big row"><span class="fa-li"><i class="fas fa-clock"></i></span>Equipment: @Model.Equipment</li>
+                                        <li class="big row"><span class="fa-li"><i class="fas fa-clock"></i></span>Mechanics type: @Model.MechanicsType</li>
+                                        <li class="big row"><span class="fa-li"><i class="fas fa-clock"></i></span>Level: @Model.Level </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+            <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+
+</section>
+<!-- /.content -->

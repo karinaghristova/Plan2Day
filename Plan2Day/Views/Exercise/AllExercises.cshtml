@@ -1,0 +1,44 @@
+﻿@using Plan2Day.Core.Models.Exercises
+@model IEnumerable<ExerciseListViewModel>
+@{
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Exercises</h3>
+            </div>
+
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th><a asp-area="" asp-controller="Exercise" asp-action="allexercises" asp-route-sortingOrder="0">Name</a></th>
+                            <th><a asp-area="" asp-controller="Exercise" asp-action="allexercises" asp-route-sortingOrder="1">Target Muscle</a></th>
+                            <th><a asp-area="" asp-controller="Exercise" asp-action="allexercises" asp-route-sortingOrder="2">Equipment</a></th>
+                            <th><a asp-area="" asp-controller="Exercise" asp-action="allexercises" asp-route-sortingOrder="3">Mechanics Type</a></th>
+                            <th><a asp-area="" asp-controller="Exercise" asp-action="allexercises" asp-route-sortingOrder="4">Level</a></th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var exercise in Model)
+                        {
+                            <tr>
+                                <td>@exercise.Name</td>
+                                <td>@exercise.TargetMuscle</td>
+                                <td>@exercise.Equipment</td>
+                                <td>@exercise.MechanicsType</td>
+                                <td>@exercise.Level</td>
+                                <td>
+                                    <a asp-area="" asp-controller="Exercise" asp-action="excercisedetails" asp-route-exerciseId="@exercise.Id">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
