@@ -10,6 +10,7 @@ namespace Plan2Day.Core.Contracts
 {
     public interface IExerciseService
     {
+        Task<bool> AddExerciseToWorkout(string exerciseId, string workoutId);
         Task<bool> CreateExercise(string name, string targetMuscleId, string equipmentId,
             string mechanicsTypeId, string levelId);
         Task<bool> ChangeTargetMuscle(string exId, string targetMuscleId);

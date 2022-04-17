@@ -55,6 +55,7 @@
                             <div class="card-footer">
                                 <div class="text-right">
                                     <a asp-area="" asp-controller="Workout" asp-action="DeleteWorkout" asp-route-workoutId="@workout.Id">Delete workout</a>
+                                    <a asp-area="" asp-controller="Exercise" asp-action="ShowAllExercises" asp-route-workoutId="@workout.Id">Add exercises</a>
                                 </div>
                             </div>
                         </div>

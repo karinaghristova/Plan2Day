@@ -22,6 +22,27 @@ namespace Plan2Day.Core.Services
             this.repo = repo;
         }
 
+        public async Task<bool> AddExerciseToWorkout(string exerciseId, string workoutId)
+        {
+            var added = false;
+
+            var workout = await repo.GetByIdAsync<Workout>(Guid.Parse(workoutId));
+            var exercise = await GetExerciseByIdAsync(exerciseId);
+
+
+            if (exercise == null || workout == null)
+            {
+                throw new Exception("Exercise could not be added to workout.");
+            }
+
+            workout.Exercises.Add(exercise);
+            repo.Update<Workout>(workout);
+            await repo.SaveChangesAsync();
+            added = true;
+
+            return added;
+        }
+
         public async Task<bool> ChangeEquipment(string exId, string equipmentId)
         {
             bool result = false;

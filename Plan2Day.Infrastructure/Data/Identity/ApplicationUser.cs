@@ -13,7 +13,6 @@ namespace Plan2Day.Infrastructure.Data.Identity
         [StringLength(200)]
         public string? LastName { get; set; }
 
-        public ICollection<Activity> Activities { get; set; } = new List<Activity>();
         public ICollection<Workout> Workouts { get; set; } = new List<Workout>();
     }
 }

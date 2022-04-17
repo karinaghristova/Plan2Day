@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Plan2Day.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using Plan2Day.Infrastructure.Data;
 namespace Plan2Day.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220417013745_RemovedActivityAndCategory")]
+    partial class RemovedActivityAndCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,6 +204,54 @@ namespace Plan2Day.Infrastructure.Migrations
                     b.HasIndex("MoviesId");
 
                     b.ToTable("MovieMovieGenre");
+                });
+
+            modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Activities.Activity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Activity");
+                });
+
+            modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Activities.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Books.Book", b =>
@@ -635,6 +685,21 @@ namespace Plan2Day.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Activities.Activity", b =>
+                {
+                    b.HasOne("Plan2Day.Infrastructure.Data.Identity.ApplicationUser", null)
+                        .WithMany("Activities")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("Plan2Day.Infrastructure.Data.DbModels.Activities.Category", "Category")
+                        .WithMany("Activities")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Books.UserBook", b =>
                 {
                     b.HasOne("Plan2Day.Infrastructure.Data.Identity.ApplicationUser", "ApplicationUser")
@@ -719,6 +784,11 @@ namespace Plan2Day.Infrastructure.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Activities.Category", b =>
+                {
+                    b.Navigation("Activities");
+                });
+
             modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Exercises.Equipment", b =>
                 {
                     b.Navigation("Exercises");
@@ -741,6 +811,8 @@ namespace Plan2Day.Infrastructure.Migrations
 
             modelBuilder.Entity("Plan2Day.Infrastructure.Data.Identity.ApplicationUser", b =>
                 {
+                    b.Navigation("Activities");
+
                     b.Navigation("Workouts");
                 });
 #pragma warning restore 612, 618

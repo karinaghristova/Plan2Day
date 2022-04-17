@@ -16,7 +16,6 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IWorkoutService, WorkoutService>();
-            services.AddScoped<IActivityService, ActivityService>();
 
             return services;
         }

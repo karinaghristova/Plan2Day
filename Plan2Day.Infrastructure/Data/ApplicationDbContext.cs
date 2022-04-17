@@ -4,7 +4,6 @@ using Plan2Day.Infrastructure.Data.DbModels.Activities;
 using Plan2Day.Infrastructure.Data.DbModels.Books;
 using Plan2Day.Infrastructure.Data.DbModels.Exercises;
 using Plan2Day.Infrastructure.Data.DbModels.Movies;
-using Plan2Day.Infrastructure.Data.DbModels.Shopping;
 using Plan2Day.Infrastructure.Data.Identity;
 
 namespace Plan2Day.Infrastructure.Data
@@ -34,14 +33,6 @@ namespace Plan2Day.Infrastructure.Data
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Workout> Workouts { get; set; }
-
-        //Shopping
-        DbSet<Item> Items { get; set; }
-        DbSet<ShoppingList> ShoppingLists { get; set; }
-
-        //Activity
-        DbSet<Category> Categories { get; set; }
-        DbSet<Activity> Activities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
