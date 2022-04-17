@@ -76,7 +76,8 @@ namespace Plan2Day.Controllers
         {
             try
             {
-                var result = exerciseService.AddExerciseToWorkout(exerciseId, workoutId);
+                var result = await exerciseService.AddExerciseToWorkout(exerciseId, workoutId);
+
                 return RedirectToAction("AllWorkouts", "Workout");
             }
             catch (Exception)
