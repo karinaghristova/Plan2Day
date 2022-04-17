@@ -11,16 +11,16 @@
             </div>
             <div class="card-body table-responsive p-0">
                 <form class="card-body" id="edit" method="post" novalidate="novalidate">
-                    <input type="hidden" name="Id" value="98f04d32-087d-4670-9894-f6e62e8f297a">
+                    <input type="hidden" name="Id" value="@Model.Id">
                     
                     <div class="form-floating">
                         <label class="form-label" for="FirstName">First name</label>
-                        <input class="form-control" placeholder="First name" aria-required="true" type="text" data-val="true" data-val-length="The field First name must be a string with a maximum length of 200." data-val-length-max="200" data-val-required="The First name field is required." id="FirstName" maxlength="200" name="FirstName" value="Pesho">
+                        <input class="form-control" placeholder="First name" aria-required="true" type="text" data-val="true" data-val-length="The field First name must be a string with a maximum length of 200." data-val-length-max="200" data-val-required="The First name field is required." id="FirstName" maxlength="200" name="FirstName" value="@Model.FirstName">
                         <span class="text-danger field-validation-valid" data-valmsg-for="FirstName" data-valmsg-replace="true"></span>
                     </div>
                     <div class="form-floating">
                         <label class="form-label" for="LastName">Last name</label>
-                        <input class="form-control" placeholder="Last name" aria-required="true" type="text" data-val="true" data-val-length="The field Last name must be a string with a maximum length of 200." data-val-length-max="200" data-val-required="The Last name field is required." id="LastName" maxlength="200" name="LastName" value="Peshev">
+                        <input class="form-control" placeholder="Last name" aria-required="true" type="text" data-val="true" data-val-length="The field Last name must be a string with a maximum length of 200." data-val-length-max="200" data-val-required="The Last name field is required." id="LastName" maxlength="200" name="LastName" value="@Model.LastName">
                         <span class="text-danger field-validation-valid" data-valmsg-for="LastName" data-valmsg-replace="true"></span>
                     </div>
                     <div class="row">

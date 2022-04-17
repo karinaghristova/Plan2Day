@@ -3,23 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Plan2Day.Infrastructure.Data;
 
 #nullable disable
 
-namespace Plan2Day.Infrastructure.Data.Migrations
+namespace Plan2Day.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220412132053_ImdOriginalIdRemoved")]
-    partial class ImdOriginalIdRemoved
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.3")
+                .HasAnnotation("ProductVersion", "6.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -206,6 +204,54 @@ namespace Plan2Day.Infrastructure.Data.Migrations
                     b.ToTable("MovieMovieGenre");
                 });
 
+            modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Activities.Activity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Activities");
+                });
+
+            modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Activities.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Books.Book", b =>
                 {
                     b.Property<Guid>("Id")
@@ -262,6 +308,25 @@ namespace Plan2Day.Infrastructure.Data.Migrations
                     b.ToTable("BookGenres");
                 });
 
+            modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Books.UserBook", b =>
+                {
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BookStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ApplicationUserId", "BookId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("UserBooks");
+                });
+
             modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Exercises.Equipment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -270,7 +335,8 @@ namespace Plan2Day.Infrastructure.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
@@ -294,7 +360,8 @@ namespace Plan2Day.Infrastructure.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<Guid>("TargetMuscleId")
                         .HasColumnType("uniqueidentifier");
@@ -320,7 +387,8 @@ namespace Plan2Day.Infrastructure.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
@@ -335,7 +403,8 @@ namespace Plan2Day.Infrastructure.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
@@ -350,7 +419,8 @@ namespace Plan2Day.Infrastructure.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
@@ -363,11 +433,18 @@ namespace Plan2Day.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Workouts");
                 });
@@ -416,6 +493,25 @@ namespace Plan2Day.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MovieGenres");
+                });
+
+            modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Movies.UserMovie", b =>
+                {
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("MovieId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("MovieStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ApplicationUserId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("UserMovies");
                 });
 
             modelBuilder.Entity("Plan2Day.Infrastructure.Data.Identity.ApplicationUser", b =>
@@ -587,6 +683,40 @@ namespace Plan2Day.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Activities.Activity", b =>
+                {
+                    b.HasOne("Plan2Day.Infrastructure.Data.Identity.ApplicationUser", null)
+                        .WithMany("Activities")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("Plan2Day.Infrastructure.Data.DbModels.Activities.Category", "Category")
+                        .WithMany("Activities")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Books.UserBook", b =>
+                {
+                    b.HasOne("Plan2Day.Infrastructure.Data.Identity.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Plan2Day.Infrastructure.Data.DbModels.Books.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Book");
+                });
+
             modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Exercises.Exercise", b =>
                 {
                     b.HasOne("Plan2Day.Infrastructure.Data.DbModels.Exercises.Equipment", "Equipment")
@@ -622,6 +752,41 @@ namespace Plan2Day.Infrastructure.Data.Migrations
                     b.Navigation("TargetMuscle");
                 });
 
+            modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Exercises.Workout", b =>
+                {
+                    b.HasOne("Plan2Day.Infrastructure.Data.Identity.ApplicationUser", "ApplicationUser")
+                        .WithMany("Workouts")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Movies.UserMovie", b =>
+                {
+                    b.HasOne("Plan2Day.Infrastructure.Data.Identity.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Plan2Day.Infrastructure.Data.DbModels.Movies.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Activities.Category", b =>
+                {
+                    b.Navigation("Activities");
+                });
+
             modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Exercises.Equipment", b =>
                 {
                     b.Navigation("Exercises");
@@ -640,6 +805,13 @@ namespace Plan2Day.Infrastructure.Data.Migrations
             modelBuilder.Entity("Plan2Day.Infrastructure.Data.DbModels.Exercises.TargetMuscle", b =>
                 {
                     b.Navigation("Exercises");
+                });
+
+            modelBuilder.Entity("Plan2Day.Infrastructure.Data.Identity.ApplicationUser", b =>
+                {
+                    b.Navigation("Activities");
+
+                    b.Navigation("Workouts");
                 });
 #pragma warning restore 612, 618
         }

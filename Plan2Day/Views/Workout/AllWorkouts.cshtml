@@ -1,0 +1,90 @@
+﻿@using Plan2Day.Core.Models.Exercises
+@using System.Collections.Generic
+@model AllWorkoutsViewModel
+@{
+    var previousDisabled = Model.Paging.CurrentPage == 1 ? "disabled" : "";
+    var nextDisabled = Model.Paging.CurrentPage == Model.Paging.TotalPages ? "disabled" : "";
+    var workoutsPresent = Model.Workouts.Count() != 0 ? true : false;
+}
+
+<!-- Main content -->
+<section class="content">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Workouts</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Exercise" asp-action="allexercises">Exercises</a></li>
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Workout" asp-action="createworkout">Create workout</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Default box -->
+    <div class="card card-solid">
+        <div class="card-body pb-0">
+            <div class="row">
+                @foreach (var workout in Model.Workouts.Take(20))
+                {
+                    <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                        <div class="card bg-light d-flex flex-fill">
+                            <div class="card-header text-muted border-bottom-0">
+                                <h3>@workout.Name</h3>
+
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <ul>
+                                        @foreach (var exercise in @workout.Exercises)
+                                        {
+                                            <li>
+                                                <div>
+                                                    @exercise.Name
+                                                    <a asp-area="" asp-controller="Exercise" asp-action="excercisedetails" asp-route-exerciseId="@exercise.Id">Details</a>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="text-right">
+                                    <a asp-area="" asp-controller="Workout" asp-action="DeleteWorkout" asp-route-workoutId="@workout.Id">Delete workout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- /.card-body -->
+            @if (workoutsPresent)
+            {
+                <div class="card-footer">
+                    <nav aria-label="Contacts Page Navigation">
+                        <ul class="pagination justify-content-center m-0">
+                            <li class="page-item col-3 text-center @previousDisabled">
+                                <a class="page-link" href="@Url.Action("AllWorkouts", "Workout", new {page = @Model.Paging.PreviousPage})">Previous Page</a>
+                            </li>
+                            <li class="page-item col-2 text-center active">
+                                <a class="page-link" href="#">@Model.Paging.CurrentPage</a>
+                            </li>
+                            <li class="page-item col-3 text-center @nextDisabled">
+                                <a class="page-link" href="@Url.Action("AllWorkouts", "Workout", new {page = @Model.Paging.NextPage})">Next Page</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            }
+            <!-- /.card-footer -->
+
+        </div>
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
