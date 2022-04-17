@@ -143,9 +143,14 @@ namespace Plan2Day.Core.Services
             return deleted;
         }
 
-        public Task<IEnumerable<EquipmentViewModel>> GetAllEquipments()
+        public async Task<IEnumerable<EquipmentViewModel>> GetAllEquipments()
         {
-            throw new NotImplementedException();
+            return await repo.All<Equipment>()
+                .Select(l => new EquipmentViewModel()
+                {
+                    Id = l.Id.ToString(),
+                    Name = l.Name
+                }).ToListAsync();
         }
 
         public async Task<IEnumerable<ExerciseListViewModel>> GetAllExercises()
@@ -252,7 +257,7 @@ namespace Plan2Day.Core.Services
 
             if (level == null)
             {
-                throw new Exception("level could not be found");
+                throw new Exception("Level could not be found");
             }
 
             return level;
